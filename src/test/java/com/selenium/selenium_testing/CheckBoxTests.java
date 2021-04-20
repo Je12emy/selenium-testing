@@ -3,6 +3,7 @@ package com.selenium.selenium_testing;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -36,18 +39,26 @@ class CheckBoxTests {
         }
     }
 
+    @BeforeEach
     void closeLightBox() {
         try {
-            fDriver.findElement(By.className("at-cm-no-button")).click();
+            WebElement closeLightBoxElement = fDriver.findElement(By.className("at-cm-no-button"));
+            WebDriverWait wait = new WebDriverWait(fDriver, 20);
+            wait.until(ExpectedConditions.visibilityOf(closeLightBoxElement));
+            closeLightBoxElement.click();
 
         } catch (NoSuchElementException e) {
         }
     }
 
+    @AfterAll
+    static void close() {
+        fDriver.close();
+    }
+
     @Test
     void selectsASingleCheckBox() {
         // Arrange
-        closeLightBox();
         WebElement checkBoxElement = fDriver.findElement(By.cssSelector("#isAgeSelected"));
         // Act
         checkBoxElement.click();
@@ -58,7 +69,6 @@ class CheckBoxTests {
     @Test
     void selects3Elements() {
         // Arrange
-        closeLightBox();
         List<WebElement> multipleCheckBoxWebElement = fDriver
                 .findElements(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div[*]"));
 
@@ -82,7 +92,6 @@ class CheckBoxTests {
     @Test
     void checksAll() {
         // Arrange
-        closeLightBox();
         List<WebElement> multipleCheckBoxWebElement = fDriver
                 .findElements(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div[*]"));
         WebElement checkAllWebElement = fDriver.findElement(By.id("check1"));
@@ -103,7 +112,6 @@ class CheckBoxTests {
     @Test
     void unchecksAll() {
         // Arrange
-        closeLightBox();
         List<WebElement> multipleCheckBoxWebElement = fDriver
                 .findElements(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[2]/div[2]/div[2]/div[*]"));
         WebElement checkAllWebElement = fDriver.findElement(By.id("check1"));

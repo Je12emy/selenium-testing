@@ -1,6 +1,8 @@
 package com.selenium.selenium_testing;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,13 +12,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class SeleniumTestingApplicationTests {
 
+	private static final String siteURL = "https://duckduckgo.com/";
+	private static WebDriver fDriver;
+
+	@BeforeAll
+	static void navigateToSite() {
+		fDriver = new FirefoxDriver();
+		fDriver.navigate().to(siteURL);
+	}
+
+	@AfterAll
+	static void close() {
+		fDriver.close();
+	}
+
 	@Test
 	void isSEOCompliant() {
 		// Arrange
-		System.setProperty("webdriver.firefox.driver",
-				"/home/dio/Documents/Github/Je12emy/selenium_testing/geckodriver");
-		WebDriver fDriver = new FirefoxDriver();
-		fDriver.navigate().to("https://duckduckgo.com/");
+		// System.setProperty("webdriver.firefox.driver",
+		// "/home/dio/Documents/Github/Je12emy/selenium_testing/geckodriver");
 
 		// Act
 		fDriver.findElement(By.id("search_form_input_homepage")).sendKeys("valuelabs");
