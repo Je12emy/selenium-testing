@@ -12,6 +12,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +24,12 @@ class CheckBoxTests {
 
     @BeforeAll
     static void navigateToSite() {
-        fDriver = new FirefoxDriver();
+        FirefoxOptions driverFirefoxOptions = new FirefoxOptions();
+        driverFirefoxOptions.addArguments("--no-sandbox");
+        driverFirefoxOptions.addArguments("--disable-dev-shm-usage");
+        driverFirefoxOptions.addArguments("--headless");
+
+        fDriver = new FirefoxDriver(driverFirefoxOptions);
         fDriver.navigate().to(siteURL);
     }
 

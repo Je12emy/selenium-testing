@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -17,7 +18,12 @@ class SeleniumTestingApplicationTests {
 
 	@BeforeAll
 	static void navigateToSite() {
-		fDriver = new FirefoxDriver();
+		FirefoxOptions driverFirefoxOptions = new FirefoxOptions();
+		driverFirefoxOptions.addArguments("--no-sandbox");
+		driverFirefoxOptions.addArguments("--disable-dev-shm-usage");
+		driverFirefoxOptions.addArguments("--headless");
+
+		fDriver = new FirefoxDriver(driverFirefoxOptions);
 		fDriver.navigate().to(siteURL);
 	}
 
